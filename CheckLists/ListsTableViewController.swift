@@ -20,6 +20,26 @@ class ListsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
 //        navigationController?.navigationBar.prefersLargeTitles = true;
+        
+
+    }
+    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        
+        if let addItemController = segue.destination as? AddItemViewController {
+            addItemController.delegate = self
+            
+            if (segue.identifier == "EditItem") {
+                if let chosenCell = sender as? UITableViewCell, let chosenPath = tableView.indexPath(for: chosenCell) {
+                    addItemController.itemToEdit = items.get(by: chosenPath.row)
+                }
+            }
+        }
     }
         
     // MARK: - Table view data source
@@ -40,8 +60,8 @@ class ListsTableViewController: UITableViewController {
 
         // Configure the cell...
         if let item = items.get(by: indexPath.row) {
-            cell.textLabel?.text = item.label
-            cell.accessoryType = item.isDone ? .checkmark : .none
+//            cell.textLabel?.text = item.label
+            configureCell(in: cell, with: item)
         }
         
         return cell
@@ -54,10 +74,20 @@ class ListsTableViewController: UITableViewController {
             items.toggleItem(by: indexPath.row)
             
             if let item = items.get(by: indexPath.row) {
-                cell.accessoryType = item.isDone ? .checkmark : .none
+                configureCell(in: cell, with: item)
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func configureCell(in cell: UITableViewCell, with item: Item) {
+        if let checkMarkLabel = cell.viewWithTag(1001) as? UILabel {
+            checkMarkLabel.text = item.isDone ? "✓" : ""
+        }
+        
+        if let nameLabel = cell.viewWithTag(1000) as? UILabel {
+            nameLabel.text = item.label
+        }
     }
     
     // Override to support editing the table view.
@@ -68,6 +98,7 @@ class ListsTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            print("insert new item")
         }
     }
     
@@ -98,19 +129,31 @@ class ListsTableViewController: UITableViewController {
     }
     */
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
 
+    
 }
 
-extension ListsTableViewController {
-
+extension ListsTableViewController: AddItemViewDelegate {
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: Item) {
+        insertItemIntoTable(item: item)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishEditting item: Item) {
+        
+        if let index = items.getIndex(with: item), let cellFound = tableView.cellForRow(at: IndexPath(row: index, section: 0)) {
+            configureCell(in: cellFound, with: item)
+        }
+        
+        navigationController?.popViewController(animated: true)
+    }
+    private func insertItemIntoTable(item: Item) {
+        items.addNewItem(item)
+        tableView.insertRows(at: [IndexPath(row: items.itemNum - 1, section: 0)], with: .automatic)
+    }
 }

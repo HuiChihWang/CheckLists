@@ -16,13 +16,40 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LIST_ITEM" id="0B5-LG-UqD">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="LIST_ITEM" id="0B5-LG-UqD">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0B5-LG-UqD" id="bYX-QQ-lqu">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="351" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✓" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gs3-U7-MBN">
+                                            <rect key="frame" x="20" y="8.5" width="20" height="27"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="20" id="eQc-TV-EOa"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6k-Q3-rhi">
+                                            <rect key="frame" x="50" y="10" width="271" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="z6k-Q3-rhi" secondAttribute="trailing" constant="30" id="0dS-bu-bZb"/>
+                                        <constraint firstItem="z6k-Q3-rhi" firstAttribute="centerY" secondItem="bYX-QQ-lqu" secondAttribute="centerY" id="9oW-0z-EqD"/>
+                                        <constraint firstItem="gs3-U7-MBN" firstAttribute="leading" secondItem="bYX-QQ-lqu" secondAttribute="leading" constant="20" id="F5T-Iz-cLb"/>
+                                        <constraint firstItem="gs3-U7-MBN" firstAttribute="centerY" secondItem="bYX-QQ-lqu" secondAttribute="centerY" id="GJU-jQ-0WK"/>
+                                        <constraint firstItem="z6k-Q3-rhi" firstAttribute="leading" secondItem="gs3-U7-MBN" secondAttribute="trailing" constant="10" id="x5D-Aj-Opi"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="ASz-go-1TW" kind="show" identifier="EditItem" trigger="accessoryAction" id="mC2-jD-zVe"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -33,7 +60,7 @@
                     <navigationItem key="navigationItem" title="CheckList" largeTitleDisplayMode="always" id="cZJ-Ur-UOz">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1HM-fK-zr2">
                             <connections>
-                                <segue destination="ASz-go-1TW" kind="show" id="17Z-0Y-I9O"/>
+                                <segue destination="ASz-go-1TW" kind="show" identifier="AddItem" id="17Z-0Y-I9O"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -82,7 +109,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Add Item" largeTitleDisplayMode="never" id="mKw-2r-Auk">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="FI1-K2-LSm"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="FI1-K2-LSm">
+                            <connections>
+                                <action selector="cancel:" destination="ASz-go-1TW" id="rsH-xF-QFa"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="1DP-jm-TU2">
                             <connections>
                                 <action selector="done:" destination="ASz-go-1TW" id="hRz-oa-pbv"/>
@@ -117,6 +148,9 @@
             <point key="canvasLocation" x="-144.92753623188406" y="47.544642857142854"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="mC2-jD-zVe"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

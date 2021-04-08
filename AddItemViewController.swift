@@ -7,10 +7,20 @@
 
 import UIKit
 
+protocol AddItemViewDelegate: class {
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController)
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: Item)
+    func addItemViewController(_ controller: AddItemViewController, didFinishEditting item: Item)
+
+}
+
 class AddItemViewController: UITableViewController {
 
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    
+    weak var delegate: AddItemViewDelegate?
+    var itemToEdit: Item?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +30,12 @@ class AddItemViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        if let itemToEdit = itemToEdit {
+            title = "Edit Item"
+            textField.text = itemToEdit.label
+            doneBarButton.isEnabled = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,10 +44,19 @@ class AddItemViewController: UITableViewController {
     }
     
     @IBAction func done(_ sender: Any) {
-        
-        
-        
-        navigationController?.popViewController(animated: true)
+        if let itemEdited = itemToEdit {
+            itemEdited.label = textField.text!
+            delegate?.addItemViewController(self, didFinishEditting: itemEdited)
+        }
+        else {
+            let newItem = Item(label: textField.text!)
+            delegate?.addItemViewController(self, didFinishAdding: newItem)
+        }
+
+    }
+    
+    @IBAction func cancel(_ sender: Any) {
+        delegate?.addItemViewControllerDidCancel(self)
     }
     
     

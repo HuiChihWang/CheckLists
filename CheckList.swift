@@ -28,6 +28,13 @@ class CheckList {
         return (0..<list.count).contains(index) ? list[index] : nil
     }
     
+    public func getIndex(with itemTarget: Item) -> Int? {
+        return list.firstIndex { item in
+            item === itemTarget
+        }
+    }
+
+    
     public func toggleItem(by index: Int) {
         if (0..<list.count).contains(index) {
             list[index].toggle()
@@ -46,11 +53,16 @@ class CheckList {
     
 }
 
-struct Item {
+class Item {
     var label: String
-    var isDone: Bool = false
+    var isDone: Bool
     
-    mutating func toggle() {
+    init(label: String, isDone: Bool = false) {
+        self.label = label
+        self.isDone = isDone
+    }
+    
+    func toggle() {
         isDone.toggle()
     }
     

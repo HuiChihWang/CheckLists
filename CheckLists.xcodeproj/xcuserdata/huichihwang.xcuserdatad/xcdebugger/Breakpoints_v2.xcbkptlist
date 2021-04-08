@@ -3,4 +3,86 @@
    uuid = "08AEEF6C-BD3B-4536-9580-FFF413998561"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9F8CCC6D-8590-4D90-A250-6727100E4E1A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CheckLists/ListsTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "tableView(_:commit:forRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C4D0A227-15A6-461B-A903-1232E9DFA964"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CheckLists/ListsTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+            landmarkName = "addItemViewController(_:didFinishEditting:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ACBC3369-060F-444D-92BC-128E32E5653A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CheckList.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "getIndex(with:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "ACBC3369-060F-444D-92BC-128E32E5653A - 5c0ff3c8b6d39c22"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CheckLists.CheckList.getIndex(with: CheckLists.Item) -&gt; Swift.Optional&lt;Swift.Int&gt;"
+                  moduleName = "CheckLists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/huichihwang/Desktop/CheckLists/CheckList.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "ACBC3369-060F-444D-92BC-128E32E5653A - 98064b5efed27ddb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (CheckLists.Item) -&gt; Swift.Bool in CheckLists.CheckList.getIndex(with: CheckLists.Item) -&gt; Swift.Optional&lt;Swift.Int&gt;"
+                  moduleName = "CheckLists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/huichihwang/Desktop/CheckLists/CheckList.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
