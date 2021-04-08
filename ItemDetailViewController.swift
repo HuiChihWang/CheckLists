@@ -7,10 +7,10 @@
 
 import UIKit
 
-protocol AddItemViewDelegate: class {
-    func addItemViewControllerDidCancel(_ controller: ItemDetailViewController)
-    func addItemViewController(_ controller: ItemDetailViewController, didFinishAdding item: Item)
-    func addItemViewController(_ controller: ItemDetailViewController, didFinishEditting item: Item)
+protocol ItemDetailViewDelegate: class {
+    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController)
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: Item)
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditting item: Item)
 
 }
 
@@ -19,7 +19,7 @@ class ItemDetailViewController: UITableViewController {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     
-    weak var delegate: AddItemViewDelegate?
+    weak var delegate: ItemDetailViewDelegate?
     var itemToEdit: Item?
     
     override func viewDidLoad() {
@@ -44,19 +44,19 @@ class ItemDetailViewController: UITableViewController {
     }
     
     @IBAction func done(_ sender: Any) {
-        if let itemEdited = itemToEdit {
+        if var itemEdited = itemToEdit {
             itemEdited.label = textField.text!
-            delegate?.addItemViewController(self, didFinishEditting: itemEdited)
+            delegate?.itemDetailViewController(self, didFinishEditting: itemEdited)
         }
         else {
             let newItem = Item(label: textField.text!)
-            delegate?.addItemViewController(self, didFinishAdding: newItem)
+            delegate?.itemDetailViewController(self, didFinishAdding: newItem)
         }
 
     }
     
     @IBAction func cancel(_ sender: Any) {
-        delegate?.addItemViewControllerDidCancel(self)
+        delegate?.itemDetailViewControllerDidCancel(self)
     }
     
     

@@ -31,7 +31,7 @@ class ListsTableViewController: UITableViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         
-        if let addItemController = segue.destination as? AddItemViewController {
+        if let addItemController = segue.destination as? ItemDetailViewController {
             addItemController.delegate = self
             
             if (segue.identifier == "EditItem") {
@@ -134,26 +134,31 @@ class ListsTableViewController: UITableViewController {
     
 }
 
-extension ListsTableViewController: AddItemViewDelegate {
-    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+extension ListsTableViewController: ItemDetailViewDelegate {
+    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true)
     }
     
-    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: Item) {
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: Item) {
         insertItemIntoTable(item: item)
         navigationController?.popViewController(animated: true)
     }
     
-    func addItemViewController(_ controller: AddItemViewController, didFinishEditting item: Item) {
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditting item: Item) {
+        editItemInTable(item: item)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func insertItemIntoTable(item: Item) {
+        items.addNewItem(item)
+        tableView.insertRows(at: [IndexPath(row: items.itemNum - 1, section: 0)], with: .automatic)
+    }
+    
+    private func editItemInTable(item: Item) {
+        items.updateItem(item)
         
         if let index = items.getIndex(with: item), let cellFound = tableView.cellForRow(at: IndexPath(row: index, section: 0)) {
             configureCell(in: cellFound, with: item)
         }
-        
-        navigationController?.popViewController(animated: true)
-    }
-    private func insertItemIntoTable(item: Item) {
-        items.addNewItem(item)
-        tableView.insertRows(at: [IndexPath(row: items.itemNum - 1, section: 0)], with: .automatic)
     }
 }
