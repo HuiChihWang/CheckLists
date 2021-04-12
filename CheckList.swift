@@ -8,7 +8,7 @@
 import Foundation
 
 class CheckList {
-    var list: [Item]
+    var list = [Item]()
     
     var itemNum: Int {
         list.count
@@ -21,15 +21,7 @@ class CheckList {
     }
     
     init() {
-        list = [
-            Item(label: "Sex"),
-            Item(label: "Excersise"),
-            Item(label: "Write Leetcode"),
-            Item(label: "Gathering"),
-            Item(label: "KOR Drinking"),
-        ]
-        
-        print(dataPath)
+        loadCheckLists()
     }
     
     public func get(by index: Int) -> Item? {
@@ -45,6 +37,7 @@ class CheckList {
     public func toggleItem(by index: Int) {
         if (0..<list.count).contains(index) {
             list[index].toggle()
+            saveCheckLists()
         }
     }
     
@@ -80,7 +73,17 @@ extension CheckList {
         }
     }
     
-    
+    func loadCheckLists() {
+        if let data = try? Data(contentsOf: dataPath) {
+            let decoder = PropertyListDecoder()
+            
+            do {
+                list = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error decoding item array: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 struct Item: Codable, Identifiable {
