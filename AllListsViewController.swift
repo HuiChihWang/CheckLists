@@ -9,7 +9,10 @@ import UIKit
 
 class AllListsViewController: UITableViewController {
 
-    let cellIdentifier = "LIST_INFO"
+    static let cellIdentifier = "LIST_INFO"
+    static let showCheckListIdentifier = "ShowChecklist"
+    static let addCheckListIdentifier = "addList"
+    let checkLists = CheckLists()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +24,31 @@ class AllListsViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // register cell
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: AllListsViewController.cellIdentifier)
         
     }
+    
+    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == AllListsViewController.showCheckListIdentifier) {
+            if let controller = segue.destination as? ListViewController, let sender = sender as? CheckList {
+                controller.currentList = sender
+            }
+        }
+        
+        if (segue.identifier == AllListsViewController.addCheckListIdentifier) {
+            if let controller = segue.destination as? ListDetailViewController {
+                controller.delegate = self
+            }
+        }
+    }
+    
 
     // MARK: - Table view data source
 
@@ -34,22 +59,29 @@ class AllListsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return checkLists.listNum
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: AllListsViewController.cellIdentifier, for: indexPath)
 
         // Configure the cell...
-        cell.accessoryType = .detailDisclosureButton
-        cell.textLabel?.text = "HELLO WORLD"
-        
+        if let list = checkLists.getList(by: indexPath.row) {
+            cell.accessoryType = .detailDisclosureButton
+            cell.textLabel?.text = list.name
+        }
+
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "ShowChecklist", sender: nil)
+        let selectItem = checkLists.getList(by: indexPath.row)
+        performSegue(withIdentifier: AllListsViewController.showCheckListIdentifier, sender: selectItem)
+    }
+    
+    private func insertRowInTable(cellForRowAt indexPath: IndexPath) {
+        tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
 
@@ -87,15 +119,11 @@ class AllListsViewController: UITableViewController {
         return true
     }
     */
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension AllListsViewController: ListDetailViewDelegate {
+    func listDetailView(_ listDetailView: ListDetailViewController, didFinishAdding listName: String) {
+        checkLists.createNewList(name: listName)
+        insertRowInTable(cellForRowAt: IndexPath(row: checkLists.listNum - 1, section: 0))
     }
-    */
-
 }

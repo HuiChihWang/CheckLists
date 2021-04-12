@@ -8,6 +8,8 @@
 import Foundation
 
 class CheckList {
+    let name: String
+    
     var list = [Item]()
     
     var itemNum: Int {
@@ -20,8 +22,9 @@ class CheckList {
         return paths[0].appendingPathComponent("checkLists.plist")
     }
     
-    init() {
-        loadCheckLists()
+    init(name: String) {
+        self.name = name
+//        loadCheckLists()
     }
     
     public func get(by index: Int) -> Item? {
@@ -37,13 +40,13 @@ class CheckList {
     public func toggleItem(by index: Int) {
         if (0..<list.count).contains(index) {
             list[index].toggle()
-            saveCheckLists()
+//            saveCheckLists()
         }
     }
     
     public func addNewItem(_ item: Item) {
         list.append(item)
-        saveCheckLists()
+//        saveCheckLists()
     }
     
     public func updateItem(_ item: Item) {
@@ -55,7 +58,7 @@ class CheckList {
     public func deleteItems(at index: Int) {
         if (0..<list.count).contains(index) {
             list.remove(at: index)
-            saveCheckLists()
+//            saveCheckLists()
         }
     }
     

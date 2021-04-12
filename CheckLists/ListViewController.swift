@@ -8,7 +8,7 @@
 import UIKit
 
 class ListViewController: UITableViewController {
-    private let items = CheckList()
+    var currentList = CheckList(name: "empty")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +21,7 @@ class ListViewController: UITableViewController {
         
 //        navigationController?.navigationBar.prefersLargeTitles = true;
         
+        title = currentList.name
 
     }
     
@@ -36,7 +37,7 @@ class ListViewController: UITableViewController {
             
             if (segue.identifier == "EditItem") {
                 if let chosenCell = sender as? UITableViewCell, let chosenPath = tableView.indexPath(for: chosenCell) {
-                    addItemController.itemToEdit = items.get(by: chosenPath.row)
+                    addItemController.itemToEdit = currentList.get(by: chosenPath.row)
                 }
             }
         }
@@ -51,7 +52,7 @@ class ListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return items.itemNum
+        return currentList.itemNum
     }
 
     
@@ -59,7 +60,7 @@ class ListViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LIST_ITEM", for: indexPath)
 
         // Configure the cell...
-        if let item = items.get(by: indexPath.row) {
+        if let item = currentList.get(by: indexPath.row) {
 //            cell.textLabel?.text = item.label
             configureCell(in: cell, with: item)
         }
@@ -71,9 +72,9 @@ class ListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let cell = tableView.cellForRow(at: indexPath) {
-            items.toggleItem(by: indexPath.row)
+            currentList.toggleItem(by: indexPath.row)
             
-            if let item = items.get(by: indexPath.row) {
+            if let item = currentList.get(by: indexPath.row) {
                 configureCell(in: cell, with: item)
             }
         }
@@ -94,7 +95,7 @@ class ListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            items.deleteItems(at: indexPath.row)
+            currentList.deleteItems(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -150,14 +151,14 @@ extension ListViewController: ItemDetailViewDelegate {
     }
     
     private func insertItemIntoTable(item: Item) {
-        items.addNewItem(item)
-        tableView.insertRows(at: [IndexPath(row: items.itemNum - 1, section: 0)], with: .automatic)
+        currentList.addNewItem(item)
+        tableView.insertRows(at: [IndexPath(row: currentList.itemNum - 1, section: 0)], with: .automatic)
     }
     
     private func editItemInTable(item: Item) {
-        items.updateItem(item)
+        currentList.updateItem(item)
         
-        if let index = items.getIndex(with: item), let cellFound = tableView.cellForRow(at: IndexPath(row: index, section: 0)) {
+        if let index = currentList.getIndex(with: item), let cellFound = tableView.cellForRow(at: IndexPath(row: index, section: 0)) {
             configureCell(in: cellFound, with: item)
         }
     }
