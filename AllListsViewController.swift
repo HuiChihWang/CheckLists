@@ -146,10 +146,7 @@ extension AllListsViewController: ListDetailViewDelegate {
     }
     
     func listDetailView(_ listDetailView: ListDetailViewController, didFinishEditing checkList: CheckList) {
-        checkLists.updateList()
-        let index = checkLists.getListIndex(for: checkList)
-        
-        if let index = index, let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) {
+        if let index = checkLists.getListIndex(for: checkList), let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) {
             cell.textLabel?.text = checkList.name
         }
         
