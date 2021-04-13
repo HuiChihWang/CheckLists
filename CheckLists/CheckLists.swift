@@ -28,16 +28,24 @@ class CheckLists {
         lists = [
         list1, list2,
         ]
+        
+//        loadCheckLists()
     }
     
     public func createNewList(name: String) {
         lists.append(CheckList(name: name))
+        saveCheckLists()
     }
     
     public func removeList(by index: Int) {
         if (0..<lists.count).contains(index) {
             lists.remove(at: index)
         }
+        saveCheckLists()
+    }
+    
+    public func updateList() {
+        saveCheckLists()
     }
     
     public func getListIndex(for list: CheckList) -> Int? {
@@ -46,5 +54,38 @@ class CheckLists {
     
     public func getList(by index: Int) -> CheckList? {
         return (0..<lists.count).contains(index) ? lists[index] : nil
+    }
+}
+
+extension CheckLists {
+    
+    private func dataPath() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        
+        return paths[0].appendingPathComponent("checkLists.plist")
+    }
+    
+    func saveCheckLists() {
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(lists)
+            try data.write(to: dataPath(), options: .atomic)
+        } catch  {
+            print("Error encoding item array: \(error.localizedDescription)")
+        }
+
+    }
+    
+    func loadCheckLists() {
+        if let data = try? Data(contentsOf: dataPath()) {
+            let decoder = PropertyListDecoder()
+            
+            do {
+                lists = try decoder.decode([CheckList].self, from: data)
+            } catch {
+                print("Error decoding list array: \(error.localizedDescription)")
+            }
+        }
     }
 }

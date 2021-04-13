@@ -7,11 +7,7 @@
 
 import Foundation
 
-class CheckList: Identifiable, Equatable {
-    static func == (lhs: CheckList, rhs: CheckList) -> Bool {
-        lhs.id == rhs.id
-    }
-    
+class CheckList: Identifiable, Equatable, Codable {
     var name: String
     var id = UUID()
     
@@ -19,6 +15,10 @@ class CheckList: Identifiable, Equatable {
     
     var itemNum: Int {
         list.count
+    }
+    
+    static func == (lhs: CheckList, rhs: CheckList) -> Bool {
+        lhs.id == rhs.id
     }
     
     private var dataPath: URL {
@@ -29,7 +29,6 @@ class CheckList: Identifiable, Equatable {
     
     init(name: String) {
         self.name = name
-//        loadCheckLists()
     }
     
     public func get(by index: Int) -> Item? {
@@ -45,13 +44,11 @@ class CheckList: Identifiable, Equatable {
     public func toggleItem(by index: Int) {
         if (0..<list.count).contains(index) {
             list[index].toggle()
-//            saveCheckLists()
         }
     }
     
     public func addNewItem(_ item: Item) {
         list.append(item)
-//        saveCheckLists()
     }
     
     public func updateItem(_ item: Item) {
@@ -63,35 +60,9 @@ class CheckList: Identifiable, Equatable {
     public func deleteItems(at index: Int) {
         if (0..<list.count).contains(index) {
             list.remove(at: index)
-//            saveCheckLists()
         }
     }
     
-}
-
-extension CheckList {
-    func saveCheckLists() {
-        let encoder = PropertyListEncoder()
-        
-        do {
-            let data = try encoder.encode(list)
-            try data.write(to: dataPath, options: .atomic)
-        } catch  {
-            print("Error encoding item array: \(error.localizedDescription)")
-        }
-    }
-    
-    func loadCheckLists() {
-        if let data = try? Data(contentsOf: dataPath) {
-            let decoder = PropertyListDecoder()
-            
-            do {
-                list = try decoder.decode([Item].self, from: data)
-            } catch {
-                print("Error decoding item array: \(error.localizedDescription)")
-            }
-        }
-    }
 }
 
 struct Item: Codable, Identifiable {
