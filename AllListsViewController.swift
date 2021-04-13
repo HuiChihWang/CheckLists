@@ -13,9 +13,19 @@ class AllListsViewController: UITableViewController {
     static let showCheckListIdentifier = "ShowChecklist"
     static let addCheckListIdentifier = "addList"
     static let editCheckListIdentifier = "editList"
+    static let cachePageKey = "OriginalList"
     
     let checkLists = CheckLists()
-    
+    var cacheListIndex: Int {
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AllListsViewController.cachePageKey)
+        }
+        
+        get {
+            UserDefaults.standard.integer(forKey: AllListsViewController.cachePageKey)
+        }
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,6 +38,15 @@ class AllListsViewController: UITableViewController {
         // register cell
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: AllListsViewController.cellIdentifier)
         
+        // load previous selected list
+        if (cacheListIndex != -1 && cacheListIndex < checkLists.listNum) {
+            performSegue(withIdentifier: AllListsViewController.showCheckListIdentifier, sender: checkLists.getList(by: cacheListIndex))
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // no any seleted list
+        cacheListIndex = -1
     }
     
     
@@ -94,6 +113,7 @@ class AllListsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectItem = checkLists.getList(by: indexPath.row)
+        cacheListIndex = indexPath.row
         performSegue(withIdentifier: AllListsViewController.showCheckListIdentifier, sender: selectItem)
     }
     
