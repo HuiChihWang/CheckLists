@@ -7,8 +7,13 @@
 
 import Foundation
 
-class CheckList {
-    let name: String
+class CheckList: Identifiable, Equatable {
+    static func == (lhs: CheckList, rhs: CheckList) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    var name: String
+    var id = UUID()
     
     var list = [Item]()
     

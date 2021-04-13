@@ -40,6 +40,10 @@ class CheckLists {
         }
     }
     
+    public func getListIndex(for list: CheckList) -> Int? {
+        return lists.firstIndex(of: list)
+    }
+    
     public func getList(by index: Int) -> CheckList? {
         return (0..<lists.count).contains(index) ? lists[index] : nil
     }

@@ -10,14 +10,21 @@ import UIKit
 protocol ListDetailViewDelegate {
     
     func listDetailView(_ listDetailView: ListDetailViewController, didFinishAdding listName: String)
+    
+    func listDetailView(_ listDetailView: ListDetailViewController, didFinishEditing checkList: CheckList)
+
+    
+    func listDetailViewDidCancel(_ listDetailView: ListDetailViewController)
 }
 
 class ListDetailViewController: UITableViewController {
 
     @IBOutlet weak var listNameInput: UITextField!
     @IBOutlet weak var doneButton: UIBarButtonItem!
-
+    
+    
     var delegate: ListDetailViewDelegate?
+    var editList: CheckList?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,28 +35,33 @@ class ListDetailViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 //         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        self.doneButton.isEnabled = false
+        doneButton.isEnabled = false
+        title = editList == nil ? "Add New List" : "Edit List"
+        listNameInput.text = editList?.name
+        listNameInput.becomeFirstResponder()
     }
     
     
     @IBAction func cancel(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        delegate?.listDetailViewDidCancel(self)
     }
     
     
     
     @IBAction func done(_ sender: Any) {
-        delegate?.listDetailView(self, didFinishAdding: listNameInput.text!)
-        navigationController?.popViewController(animated: true)
+        if let editList = editList {
+            editList.name = listNameInput.text!
+            delegate?.listDetailView(self, didFinishEditing: editList)
+        }
+        else {
+            delegate?.listDetailView(self, didFinishAdding: listNameInput.text!)
+        }
     }
     
     
     
     
     
-    
-    
-
 
 
     /*

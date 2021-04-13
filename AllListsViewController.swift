@@ -12,6 +12,8 @@ class AllListsViewController: UITableViewController {
     static let cellIdentifier = "LIST_INFO"
     static let showCheckListIdentifier = "ShowChecklist"
     static let addCheckListIdentifier = "addList"
+    static let editCheckListIdentifier = "editList"
+    
     let checkLists = CheckLists()
     
     override func viewDidLoad() {
@@ -47,6 +49,15 @@ class AllListsViewController: UITableViewController {
                 controller.delegate = self
             }
         }
+        
+        if (segue.identifier == AllListsViewController.editCheckListIdentifier) {
+            if let controller = segue.destination as? ListDetailViewController, let selectedList = sender as? CheckList {
+                controller.editList = selectedList
+                controller.delegate = self
+            }
+        }
+        
+        
     }
     
 
@@ -73,6 +84,12 @@ class AllListsViewController: UITableViewController {
         }
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        if let selectedList = checkLists.getList(by: indexPath.row) {
+            performSegue(withIdentifier: AllListsViewController.editCheckListIdentifier, sender: selectedList)
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -125,5 +142,21 @@ extension AllListsViewController: ListDetailViewDelegate {
     func listDetailView(_ listDetailView: ListDetailViewController, didFinishAdding listName: String) {
         checkLists.createNewList(name: listName)
         insertRowInTable(cellForRowAt: IndexPath(row: checkLists.listNum - 1, section: 0))
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func listDetailView(_ listDetailView: ListDetailViewController, didFinishEditing checkList: CheckList) {
+        let index = checkLists.getListIndex(for: checkList)
+        
+        if let index = index, let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) {
+            cell.textLabel?.text = checkList.name
+        }
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func listDetailViewDidCancel(_ listDetailView: ListDetailViewController) {
+        navigationController?.popViewController(animated: true)
+
     }
 }
