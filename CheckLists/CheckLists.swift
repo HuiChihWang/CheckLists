@@ -49,6 +49,12 @@ class CheckLists {
     public func getList(by index: Int) -> CheckList? {
         return (0..<lists.count).contains(index) ? lists[index] : nil
     }
+    
+    public func sortLists() {
+        lists.sort { list1, list2 in
+            return list1.name.localizedCompare(list2.name) == .orderedAscending
+        }
+    }
 }
 
 extension CheckLists {

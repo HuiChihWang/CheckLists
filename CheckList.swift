@@ -17,6 +17,16 @@ class CheckList: Identifiable, Equatable, Codable {
         list.count
     }
     
+    var remainingItemNum: Int {
+        var count = 0
+        list.forEach { item in
+            if (!item.isDone) {
+                count += 1
+            }
+        }
+        return count
+    }
+    
     static func == (lhs: CheckList, rhs: CheckList) -> Bool {
         lhs.id == rhs.id
     }

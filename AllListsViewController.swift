@@ -36,7 +36,6 @@ class AllListsViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // register cell
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: AllListsViewController.cellIdentifier)
         
         // load previous selected list
         if (cacheListIndex != -1 && cacheListIndex < checkLists.listNum) {
@@ -44,7 +43,11 @@ class AllListsViewController: UITableViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // reload table
+        tableView.reloadData()
         // no any seleted list
         cacheListIndex = -1
     }
@@ -94,15 +97,35 @@ class AllListsViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AllListsViewController.cellIdentifier, for: indexPath)
-
+        var cell: UITableViewCell?
+        
+        cell = tableView.dequeueReusableCell(withIdentifier: AllListsViewController.cellIdentifier)
+                
+        if (cell == nil) {
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: AllListsViewController.cellIdentifier)
+        }
+        
         // Configure the cell...
         if let list = checkLists.getList(by: indexPath.row) {
-            cell.accessoryType = .detailDisclosureButton
-            cell.textLabel?.text = list.name
+            cell?.accessoryType = .detailDisclosureButton
+            cell?.textLabel?.text = list.name
+            
+            let remainingLabel: String!
+            if (list.itemNum == 0) {
+                remainingLabel = "(no item)"
+            }
+            else {
+                if (list.remainingItemNum == 0) {
+                    remainingLabel = "All Done"
+                }
+                else {
+                    remainingLabel = "\(list.remainingItemNum) Remaining"
+                }
+            }
+            cell?.detailTextLabel?.text = remainingLabel
         }
 
-        return cell
+        return cell ?? UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
