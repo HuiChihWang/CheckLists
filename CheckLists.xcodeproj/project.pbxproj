@@ -18,6 +18,7 @@
 		0C69EA7D262455F600F120F3 /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C69EA7C262455F600F120F3 /* AllListsViewController.swift */; };
 		0C69EA822624618000F120F3 /* CheckLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C69EA812624618000F120F3 /* CheckLists.swift */; };
 		0C69EA862624970B00F120F3 /* ListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C69EA852624970B00F120F3 /* ListDetailViewController.swift */; };
+		0C69EA912626D77E00F120F3 /* IconPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C69EA902626D77E00F120F3 /* IconPickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		0C69EA7C262455F600F120F3 /* AllListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = SOURCE_ROOT; };
 		0C69EA812624618000F120F3 /* CheckLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckLists.swift; sourceTree = "<group>"; };
 		0C69EA852624970B00F120F3 /* ListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailViewController.swift; sourceTree = SOURCE_ROOT; };
+		0C69EA902626D77E00F120F3 /* IconPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			children = (
 				0C69EA852624970B00F120F3 /* ListDetailViewController.swift */,
 				0C69EA7C262455F600F120F3 /* AllListsViewController.swift */,
+				0C69EA902626D77E00F120F3 /* IconPickerViewController.swift */,
 				0C69EA78261DC09B00F120F3 /* ItemDetailViewController.swift */,
 				0C69EA75261C941F00F120F3 /* CheckList.swift */,
 				0C69EA812624618000F120F3 /* CheckLists.swift */,
@@ -155,6 +158,7 @@
 				0C69EA79261DC09B00F120F3 /* ItemDetailViewController.swift in Sources */,
 				0C69EA76261C941F00F120F3 /* CheckList.swift in Sources */,
 				0C69EA7D262455F600F120F3 /* AllListsViewController.swift in Sources */,
+				0C69EA912626D77E00F120F3 /* IconPickerViewController.swift in Sources */,
 				0C69EA73261C87B800F120F3 /* ListViewController.swift in Sources */,
 				0C69EA5C261C872000F120F3 /* AppDelegate.swift in Sources */,
 				0C69EA822624618000F120F3 /* CheckLists.swift in Sources */,

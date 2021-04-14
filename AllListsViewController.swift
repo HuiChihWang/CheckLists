@@ -123,7 +123,7 @@ class AllListsViewController: UITableViewController {
                 }
             }
             cell?.detailTextLabel?.text = remainingLabel
-            cell?.imageView?.image = UIImage(systemName: list.catogory.rawValue)
+            cell?.imageView?.image = UIImage(systemName: list.catogory.imageName)
 
         }
 
@@ -180,8 +180,8 @@ class AllListsViewController: UITableViewController {
 }
 
 extension AllListsViewController: ListDetailViewDelegate {
-    func listDetailView(_ listDetailView: ListDetailViewController, didFinishAdding listName: String) {
-        checkLists.createNewList(name: listName)
+    func listDetailView(_ listDetailView: ListDetailViewController, didFinishAdding checkList: CheckList) {
+        checkLists.addNewList(list: checkList)
         checkLists.sortLists()
         tableView.reloadData()
         navigationController?.popViewController(animated: true)

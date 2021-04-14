@@ -32,8 +32,8 @@ class CheckLists {
         loadCheckLists()
     }
     
-    public func createNewList(name: String) {
-        lists.append(CheckList(name: name))
+    public func addNewList(list: CheckList) {
+        lists.append(list)
     }
     
     public func removeList(by index: Int) {

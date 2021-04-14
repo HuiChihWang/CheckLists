@@ -9,7 +9,7 @@ import UIKit
 
 protocol ListDetailViewDelegate {
     
-    func listDetailView(_ listDetailView: ListDetailViewController, didFinishAdding listName: String)
+    func listDetailView(_ listDetailView: ListDetailViewController, didFinishAdding checkList: CheckList)
     
     func listDetailView(_ listDetailView: ListDetailViewController, didFinishEditing checkList: CheckList)
 
@@ -21,6 +21,8 @@ class ListDetailViewController: UITableViewController {
 
     @IBOutlet weak var listNameInput: UITextField!
     @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var iconImage: UIImageView!
+    @IBOutlet weak var iconName: UILabel!
     
     
     var delegate: ListDetailViewDelegate?
@@ -36,9 +38,21 @@ class ListDetailViewController: UITableViewController {
 //         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         doneButton.isEnabled = false
-        title = editList == nil ? "Add New List" : "Edit List"
-        listNameInput.text = editList?.name
         listNameInput.becomeFirstResponder()
+        
+        if let editList = editList {
+            title = "Edit List"
+            listNameInput.text = editList.name
+            iconName.text = editList.catogory.rawValue
+            iconImage.image = UIImage(systemName: editList.catogory.imageName)
+        }
+        else {
+            title = "Add New List"
+            let defaultCategory = ListCatogory.none
+            iconName.text = defaultCategory.rawValue
+            iconImage.image = UIImage(systemName: defaultCategory.imageName)
+        }
+
     }
     
     
@@ -51,18 +65,23 @@ class ListDetailViewController: UITableViewController {
     @IBAction func done(_ sender: Any) {
         if let editList = editList {
             editList.name = listNameInput.text!
+            
+            if let catogory = ListCatogory(rawValue: iconName.text!) {
+                editList.catogory = catogory
+            }
+            
             delegate?.listDetailView(self, didFinishEditing: editList)
         }
         else {
-            delegate?.listDetailView(self, didFinishAdding: listNameInput.text!)
+            let newList = CheckList(name: listNameInput.text!)
+            
+            if let catogory = ListCatogory(rawValue: iconName.text!) {
+                newList.catogory = catogory
+            }
+            
+            delegate?.listDetailView(self, didFinishAdding: newList)
         }
     }
-    
-    
-    
-    
-    
-
 
     /*
     // MARK: - Navigation

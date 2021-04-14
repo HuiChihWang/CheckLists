@@ -30,8 +30,8 @@
             filePath = "CheckList.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "getIndex(with:)"
             landmarkType = "7">
             <Locations>
@@ -78,8 +78,8 @@
             filePath = "ListDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "done(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -97,6 +97,22 @@
             startingLineNumber = "141"
             endingLineNumber = "141"
             landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "44A8F178-9A13-44C1-B8E3-DC298EFACE86"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CheckLists/IconPickerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
