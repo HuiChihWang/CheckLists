@@ -84,6 +84,7 @@ extension CheckLists {
             
             do {
                 lists = try decoder.decode([CheckList].self, from: data)
+                sortLists()
                 print("Load Current Data from \(dataPath())")
             } catch {
                 print("Error decoding list array: \(error.localizedDescription)")

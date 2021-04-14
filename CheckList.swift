@@ -27,6 +27,11 @@ class CheckList: Identifiable, Equatable, Codable {
         return count
     }
     
+    //TODO: Fix random category
+    var catogory: ListCatogory {
+        ListCatogory.allCases.randomElement() ?? .none
+    }
+    
     static func == (lhs: CheckList, rhs: CheckList) -> Bool {
         lhs.id == rhs.id
     }
@@ -88,4 +93,12 @@ struct Item: Codable, Identifiable {
     mutating func toggle() {
         isDone.toggle()
     }
+}
+
+enum ListCatogory: String, Codable, CaseIterable {
+    case appointment = "alarm"
+    case birthDay = "gift"
+    case travel = "airplane"
+    case course = "pencil"
+    case none = "folder"
 }

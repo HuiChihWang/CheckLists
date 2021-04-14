@@ -123,6 +123,8 @@ class AllListsViewController: UITableViewController {
                 }
             }
             cell?.detailTextLabel?.text = remainingLabel
+            cell?.imageView?.image = UIImage(systemName: list.catogory.rawValue)
+
         }
 
         return cell ?? UITableViewCell()
@@ -138,10 +140,6 @@ class AllListsViewController: UITableViewController {
         let selectItem = checkLists.getList(by: indexPath.row)
         cacheListIndex = indexPath.row
         performSegue(withIdentifier: AllListsViewController.showCheckListIdentifier, sender: selectItem)
-    }
-    
-    private func insertRowInTable(cellForRowAt indexPath: IndexPath) {
-        tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
 
@@ -184,20 +182,18 @@ class AllListsViewController: UITableViewController {
 extension AllListsViewController: ListDetailViewDelegate {
     func listDetailView(_ listDetailView: ListDetailViewController, didFinishAdding listName: String) {
         checkLists.createNewList(name: listName)
-        insertRowInTable(cellForRowAt: IndexPath(row: checkLists.listNum - 1, section: 0))
+        checkLists.sortLists()
+        tableView.reloadData()
         navigationController?.popViewController(animated: true)
     }
     
     func listDetailView(_ listDetailView: ListDetailViewController, didFinishEditing checkList: CheckList) {
-        if let index = checkLists.getListIndex(for: checkList), let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) {
-            cell.textLabel?.text = checkList.name
-        }
-        
+        checkLists.sortLists()
+        tableView.reloadData()
         navigationController?.popViewController(animated: true)
     }
     
     func listDetailViewDidCancel(_ listDetailView: ListDetailViewController) {
         navigationController?.popViewController(animated: true)
-
     }
 }
