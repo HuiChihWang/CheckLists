@@ -27,7 +27,7 @@ class CheckList: Identifiable, Equatable, Codable {
         return count
     }
     
-    var catogory = ListCatogory.none
+    var catogory = ListCategory.none
     
     static func == (lhs: CheckList, rhs: CheckList) -> Bool {
         lhs.id == rhs.id
@@ -92,7 +92,7 @@ struct Item: Codable, Identifiable {
     }
 }
 
-enum ListCatogory: String, Codable, CaseIterable {
+enum ListCategory: String, Codable, CaseIterable {
     case appointment = "Appointment"
     case birthDay = "Birthday"
     case travel = "Travel"

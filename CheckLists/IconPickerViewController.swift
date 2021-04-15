@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol IconPickerViewControllerDelegate {
+    func iconPickerViewController(_ iconPickerViewController: IconPickerViewController, didChooseIcon category: ListCategory)
+}
 class IconPickerViewController: UITableViewController {
     
-    let categories = ListCatogory.allCases
+    let categories = ListCategory.allCases
     let cellIdentifier = "categoryCell"
+    
+    var delegate: IconPickerViewControllerDelegate?
+    var selectedIcon: ListCategory!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +27,7 @@ class IconPickerViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
     }
 
     // MARK: - Table view data source
@@ -41,16 +47,17 @@ class IconPickerViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
 
         // Configure the cell...
-        let catogory = categories[indexPath.row]
+        let category = categories[indexPath.row]
         
-        cell.textLabel?.text = categories[indexPath.row].rawValue
-        cell.imageView?.image = UIImage(systemName: catogory.imageName)
-        
+        cell.textLabel?.text = category.rawValue
+        cell.imageView?.image = UIImage(systemName: category.imageName)
+        cell.detailTextLabel?.text = category == selectedIcon ? "✔︎" : ""
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        delegate?.iconPickerViewController(self, didChooseIcon: categories[indexPath.row])
     }
 
     /*

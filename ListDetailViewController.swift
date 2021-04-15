@@ -24,6 +24,7 @@ class ListDetailViewController: UITableViewController {
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var iconName: UILabel!
     
+    let chooseIconId = "chooseIcon"
     
     var delegate: ListDetailViewDelegate?
     var editList: CheckList?
@@ -48,7 +49,7 @@ class ListDetailViewController: UITableViewController {
         }
         else {
             title = "Add New List"
-            let defaultCategory = ListCatogory.none
+            let defaultCategory = ListCategory.none
             iconName.text = defaultCategory.rawValue
             iconImage.image = UIImage(systemName: defaultCategory.imageName)
         }
@@ -66,7 +67,7 @@ class ListDetailViewController: UITableViewController {
         if let editList = editList {
             editList.name = listNameInput.text!
             
-            if let catogory = ListCatogory(rawValue: iconName.text!) {
+            if let catogory = ListCategory(rawValue: iconName.text!) {
                 editList.catogory = catogory
             }
             
@@ -75,7 +76,7 @@ class ListDetailViewController: UITableViewController {
         else {
             let newList = CheckList(name: listNameInput.text!)
             
-            if let catogory = ListCatogory(rawValue: iconName.text!) {
+            if let catogory = ListCategory(rawValue: iconName.text!) {
                 newList.catogory = catogory
             }
             
@@ -83,18 +84,32 @@ class ListDetailViewController: UITableViewController {
         }
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == chooseIconId) {
+            if let controller = segue.destination as? IconPickerViewController {
+                controller.delegate = self
+                controller.selectedIcon = ListCategory(rawValue: iconName.text!)
+            }
+        }
     }
-    */
+    
 
 }
 
+extension ListDetailViewController: IconPickerViewControllerDelegate {
+    func iconPickerViewController(_ iconPickerViewController: IconPickerViewController, didChooseIcon category: ListCategory) {
+        iconImage.image = UIImage(systemName: category.imageName)
+        iconName.text = category.rawValue
+        navigationController?.popViewController(animated: true)
+    }
+}
 extension ListDetailViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
