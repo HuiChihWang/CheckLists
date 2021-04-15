@@ -8,7 +8,11 @@
 import UIKit
 
 class ListViewController: UITableViewController {
-    var currentList = CheckList(name: "empty")
+    var currentList = CheckList(name: "empty") {
+        didSet {
+            title = currentList.name
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,11 +22,6 @@ class ListViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-//        navigationController?.navigationBar.prefersLargeTitles = true;
-        
-        title = currentList.name
-
     }
     
     // MARK: - Navigation

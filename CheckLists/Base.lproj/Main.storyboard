@@ -87,9 +87,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Name Of Item" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="05w-DO-PYG">
-                                                    <rect key="frame" x="57" y="4" width="305" height="34"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name Of Item" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="05w-DO-PYG">
+                                                    <rect key="frame" x="15" y="0.0" width="399" height="44"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
@@ -98,6 +97,12 @@
                                                     </connections>
                                                 </textField>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="05w-DO-PYG" firstAttribute="top" secondItem="1xA-ze-h6T" secondAttribute="top" id="Qg5-1s-7fQ"/>
+                                                <constraint firstItem="05w-DO-PYG" firstAttribute="leading" secondItem="1xA-ze-h6T" secondAttribute="leading" constant="15" id="UcJ-E3-oEd"/>
+                                                <constraint firstAttribute="bottom" secondItem="05w-DO-PYG" secondAttribute="bottom" id="gKc-AN-Rep"/>
+                                                <constraint firstAttribute="trailing" secondItem="05w-DO-PYG" secondAttribute="trailing" id="hfx-06-F5S"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
